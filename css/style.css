@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Saira+Stencil+One&display=swap');
+
+.sport-font{
+    font-family: "Anton SC", serif;
+    letter-spacing: 0.4px;
+    font-style: italic;
+}
+
+.division-font{
+    font-size: 70%;
+}
+
+.loader {
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.75);
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    animation: neonFlicker 1.5s infinite alternate;
+  }
+  .loader::after,
+  .loader::before {
+    content: '';  
+    position: absolute;
+    height: 16px;
+    width: 3px;
+    background: #fff;
+    box-shadow: 
+      0 0 0.04em #ff4d4d,
+      0 0 0.08em #ff1a1a,
+      0 0 0.12em #ff0000,
+      0 0 0.16em #cc0000,
+      0 0 0.2em #990000,
+      0 0 0.30em #660000;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) rotate(0deg);
+    transform-origin: 25% 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    animation: rotation 10s linear infinite;
+  }
+  .loader::before {
+    height: 22px;
+    width: 2px;
+    transform: translateX(-50%) rotate(0deg);
+    animation-duration: 5s;
+  } 
+  @keyframes rotation {
+    0%    { transform: rotate(0deg)}
+    100%  { transform: rotate(360deg)}
+  } 
+
+  .neon-text {
+    font-family: "Saira Stencil One", serif;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.75);
+        
+    /* Efecto de resplandor en rojo con valores relativos */
+    text-shadow: 
+      0 0 0.04em #ff4d4d,
+      0 0 0.08em #ff1a1a,
+      0 0 0.12em #ff0000,
+      0 0 0.16em #cc0000,
+      0 0 0.2em #990000,
+      0 0 0.30em #660000;
+      
+    /* Animación de parpadeo sutil */
+    animation: neonFlicker 1.5s infinite alternate;
+  }
+  
+  @keyframes neonFlicker {
+    0% {
+      opacity: 1;
+      text-shadow: 
+        0 0 0.04em #ff6666,
+        0 0 0.08em #ff3333,
+        0 0 0.12em #ff0000,
+        0 0 0.16em #cc0000,
+        0 0 0.2em #990000,
+        0 0 0.3em #660000;
+    }
+    50% {
+      opacity: 0.9;
+      text-shadow: 
+        0 0 0.032em #ff4d4d,
+        0 0 0.064em #ff1a1a,
+        0 0 0.094em #ff0000,
+        0 0 0.128em #cc0000,
+        0 0 0.16em #990000,
+        0 0 0.24em #660000;
+    }
+    100% {
+      opacity: 1;
+      text-shadow: 
+        0 0 0.048em #ff8080,
+        0 0 0.094em #ff4d4d,
+        0 0 0.144em #ff1a1a,
+        0 0 0.184em #cc0000,
+        0 0 0.24em #990000,
+        0 0 0.36em #660000;
+    }
+  }
+  
