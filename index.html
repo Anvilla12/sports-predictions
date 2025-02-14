@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NBA</title>
+    <link rel="shortcut icon" href="img/NBA Logo.svg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body class="h-100 bg-body-secondary">
+    <nav class="navbar bg-dark bg-gradient text-white fw-semibold position-relative">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="img/NBA Logo.svg" alt="Logo" width="48" height="48" class="d-inline-block align-text-top">
+        </a>
+        <div class="h2 fw-bolder fst-italic position-absolute start-50 top-50 translate-middle">
+          PRONOSTICOS NBA
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-dark bg-gradient dropdown-toggle" style="margin-right: 65px" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Partidos de la Semana
+            </button>
+            <ul class="dropdown-menu bg-dark bg-gradient">
+                <li><a class="dropdown-item text-light fw-semibold d-flex justify-content-evenly align-items-center" href="#" data-id="12345"><img  src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/CLE.png" width="24" height="24" alt="Cavaliers" class="me-2">CLE vs MIN <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/MIN.png" width="24" height="24" alt="Timberwolves" class="ms-2 me-3"> <span class="fw-normal mt-2" style="font-size: 60%;"> 11/Feb 14:00hrs</span></a></li>
+                <hr class="m-1 text-light">
+                <li><a class="dropdown-item text-light fw-semibold d-flex justify-content-evenly align-items-center" href="#" data-id="12345"><img  src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/PHI.png" width="24" height="24" alt="76ers" class="me-2">PHI vs TOR <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/TOR.png" width="24" height="24" alt="Raptors" class="ms-2 me-3"> <span class="fw-normal" style="font-size: 60%;"> 11/Feb 16:00hrs</span></a></li>
+                <hr class="m-1 text-light">
+                <li><a class="dropdown-item text-light fw-semibold d-flex justify-content-evenly align-items-center" href="#" data-id="12345"><img  src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/NYK.png" width="24" height="24" alt="Knicks" class="me-2">NYK vs IND <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/IND.png" width="24" height="24" alt="Pacers" class="ms-2 me-3"> <span class="fw-normal" style="font-size: 60%;"> 11/Feb 18:00hrs</span></a></li>
+            </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="d-flex w-100 position-relative" style="height: 80px;">
+      <div id="teamA" class="flex-fill position-relative overflow-hidden">
+          <div class="position-absolute" style="top: -45px; left: 60px;">
+              <img id="logoA" src="" alt="Equipo A" width="180" height="180">
+          </div>
+          <div class="position-absolute" style="top: 0; left: 270px;">
+              <h1 id="nameA" class="text-white fw-bolder fst-italic" style="opacity: 0.6; font-size: 60px;"></h1>
+          </div>
+          <div class="position-absolute" style="top: 8px; left: 440px;">
+              <h1 id="scoreA" class="text-white fw-bolder fst-italic" style="opacity: 0.6; font-size: 45px;">00</h1>
+          </div>
+      </div>
+      <div id="teamB" class="flex-fill position-relative overflow-hidden">
+          <div class="position-absolute" style="top: -45px; right: 60px;">
+              <img id="logoB" src="" alt="Equipo B" width="180" height="180">
+          </div>
+          <div class="position-absolute" style="top: 0; right: 270px;">
+              <h1 id="nameB" class="text-white fw-bolder fst-italic" style="opacity: 0.6; font-size: 60px;"></h1>
+          </div>
+          <div class="position-absolute" style="top: 8px; right: 480px;">
+              <h1 id="scoreB" class="text-white fw-bolder fst-italic" style="opacity: 0.6; font-size: 45px;">00</h1>
+          </div>
+      </div>
+      <div class="position-absolute overflow-hidden top-50 start-50 translate-middle">
+          <img src="img/vs.png" width="150" height="150">
+      </div>
+  </div>
+  <div class="text-center bg-light">
+      <div id="gameTime" class="fw-bolder fst-italic" style="opacity: 0.6; font-size: 40px;">
+        <span class="loader"></span>
+        --:-- - <span style="font-size: 80%;">st</span>
+      </div>
+  </div>
+    <nav class="navbar bg-body-tertiary">
+      <div class="container">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <button class="btn btn-light bg-gradient dropdown-toggle fw-semibold" data-bs-toggle="dropdown" aria-expanded="false">
+              Visitante
+            </button>
+            <ul id="visitor-teams" class="position-absolute dropdown-menu dropdown-menu-light bg-gradient"></ul>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <button class="btn btn-light dropdown-toggle fw-semibold" data-bs-toggle="dropdown" aria-expanded="false">
+              Local
+            </button>
+            <ul id="local-teams" class="position-absolute dropdown-menu dropdown-menu-light bg-gradient"></ul>   
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <main class="d-flex flex-column justify-content-center align-items-center p-5">
+
+      <div class="row m-3" style="max-width: 750px;">
+        <div class="col-5">
+            <label class="form-label ps-2">Concursante</label>
+            <input type="text" class="form-control" id="inputContestant">
+        </div>
+        <div class="col-2">
+            <label class="form-label" id="teamLocalLabel">Local</label>
+            <input type="number" class="form-control" id="scoreLocal">
+        </div>
+        <div class="col-2">
+            <label class="form-label" id="teamVisitorLabel">Visitante</label>
+            <input type="number" class="form-control" id="scoreVisitor">
+        </div>
+        <div class="col d-flex align-items-center justify-content-center btn btn-success" style="margin-top: 32px" onclick="addPrediction()">
+            Agregar
+        </div>
+      </div>
+    
+      <table class="ms-3 table table-hover" style="max-width: 750px;">
+        <thead>
+            <tr>
+                <th scope="col-1" style="border-radius: 8px 0 0 0;">#</th>
+                <th scope="col-5">Concursante</th>
+                <th scope="col-2" id="tableTeamLocal">Local</th>
+                <th scope="col-2" id="tableTeamVisitor">Visitante</th>
+                <th scope="col-2" id="actions" style="border-radius: 0 8px 0 0;">Opciones</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+      
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/nba-teams.js"></script>     
+  </body>
+</html>
