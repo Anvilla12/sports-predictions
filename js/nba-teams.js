@@ -64,7 +64,7 @@ async function getWeeklyGames() {
         });
         const dateParts = formattedDate.split(" ");
         const day = dateParts[0];
-        const month = dateParts[1].charAt(0).toUpperCase() + dateParts[1].slice(1);
+        const month = dateParts[2].charAt(0).toUpperCase() + dateParts[2].slice(1,3);
         const finalDate = `${day} ${month}`;
         // Hora en formato 24 hrs
         const time = gameDate.toLocaleTimeString("es-MX", {
@@ -145,22 +145,26 @@ async function getNBAScore(eventId) {
       document.getElementById("scoreA").textContent = homeTeam.score;
       document.getElementById("scoreB").textContent = awayTeam.score;
       
-      // Actualizar estado del juego: reloj y periodo en el div gameTime
-      // Actualizamos la parte de reloj y periodo en el HTML responsive:
+      // Actualizar estado del juego: reloj y periodo en el div #gameTime:
       const clockValue = status?.displayClock ?? "00:00";
       const period = status?.period ?? "";
       const ordinalSuffixes = {1: "st", 2: "nd", 3: "rd", 4: "th"};
       const periodSuffix = (typeof period === "number") ? (ordinalSuffixes[period] || "th") : "";
-      
+
       // Actualizar el span con clase "clock" dentro de #gameTime
       const clockSpan = document.querySelector("#gameTime .clock");
-      if (clockSpan) clockSpan.textContent = clockValue;
-      
-      // Actualizar el div con clase "neon-text" dentro de #gameTime para el periodo
+      if (clockSpan) {
+        clockSpan.textContent = clockValue;
+        // Iniciar el cronómetro local usando el valor extraído de la API
+        startLocalClock(clockValue);
+      }
+
+      // Actualizar el div con clase "neon-text" para el periodo
       const periodDiv = document.querySelector("#gameTime .neon-text");
       if (periodDiv) {
           periodDiv.innerHTML = `${period}${periodSuffix ? `<span style="font-size: 80%; z-index: -1;">${periodSuffix}</span>` : ""}`;
       }
+
       
       // Actualizar colores de fondo y nombres/score en desktop
       const homeTeamData = nbaTeams.find(team => team.code === homeTeam.team.abbreviation);
@@ -188,11 +192,30 @@ async function getNBAScore(eventId) {
     loadPredictions();
     
     // Si el juego está finalizado, mostrar la alerta de ganador.
-    if (data.header.competitions[0].status?.type.description === "Final") {
+    const description = data.header?.competitions?.[0]?.status?.type?.description;
+
+    if (description === "Scheduled") {
+      document.querySelector('.timer').classList.add('stop-animation');
+      console.log('Partido por Iniciar');
+    }
+
+    if (description === "Final") {
+      document.querySelector('.timer').classList.add('stop-animation');
+      console.log('Partido Finalizado');
+
       const predictions = JSON.parse(localStorage.getItem('predictions')) || [];
       if (predictions.length > 0) {
         const sortedPredictions = sortPredictions(predictions);
         const winnerName = sortedPredictions[0].contestant;
+        // Swal.fire({
+        //   position: "top-end",
+        //   icon: "success",
+        //   title: `<h4 class="alert-heading text-center">Juego Finalizado</h4>
+        //     <div class="display-6 fw-bolder text-center">${winnerName}  <i class="bi bi-emoji-grin"></i></div> 
+        //     <div class="h5 fw-bold text-center">Es el ganador@!!!</div>`,
+        //   showConfirmButton: false,
+        //   timer: 5000
+        // });
         let alertDiv = document.getElementById('winnerAlert');
         if (!alertDiv) {
           alertDiv = document.createElement('div');
@@ -223,6 +246,41 @@ async function getNBAScore(eventId) {
   }
 }
 
+// 3.1. Función: Iniciar el cronómetro local a partir del tiempo extraído de la API
+let clockInterval = null;
+
+function startLocalClock(initialTime) {
+  // Limpiar cualquier intervalo anterior
+  if (clockInterval) {
+    clearInterval(clockInterval);
+  }
+  // Parsear el tiempo inicial (formato "MM:SS")
+  let [minutes, seconds] = initialTime.split(':').map(Number);
+  const clockElement = document.querySelector('.clock');
+  // Actualizar el display inmediatamente
+  clockElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+  // Iniciar el cronómetro que se actualiza cada segundo
+  clockInterval = setInterval(() => {
+    // Si el tiempo ya es 00:00, detener el cronómetro
+    if (minutes === 0 && seconds === 0) {
+      clearInterval(clockInterval);
+      clockElement.textContent = "00:00";
+      return;
+    }
+    // Restar un segundo
+    if (seconds === 0) {
+      minutes--;
+      seconds = 59;
+    } else {
+      seconds--;
+    }
+    // Actualizar el display
+    clockElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }, 1000);
+}
+
+
 // =============================================
 // 4. Función: Auto-refresh del último juego elegido
 // =============================================
@@ -236,7 +294,7 @@ function startAutoRefresh(gameId) {
   currentGameId = gameId;
   refreshInterval = setInterval(() => {
     getNBAScore(currentGameId);
-  }, 5000);
+  }, 15000);
 }
 
 // =============================================
@@ -315,18 +373,18 @@ function savePrediction(prediction) {
 }
 
 // 6.4. Agregar botón "Eliminar Todas" si no existe
-// function addDeleteButton() {
-//   const table = document.querySelector('table');
-//   let deleteButton = document.getElementById('deleteButton');
-//   if (!deleteButton) {
-//     deleteButton = document.createElement('button');
-//     deleteButton.id = 'deleteButton';
-//     deleteButton.className = 'btn btn-danger mt-3';
-//     deleteButton.textContent = 'Eliminar Todas';
-//     deleteButton.onclick = deleteAllPredictions;
-//     table.parentNode.appendChild(deleteButton);
-//   }
-// }
+function addDeleteButton() {
+  const table = document.querySelector('table');
+  let deleteButton = document.getElementById('deleteButton');
+  if (!deleteButton) {
+    deleteButton = document.createElement('button');
+    deleteButton.id = 'deleteButton';
+    deleteButton.className = 'btn btn-danger mt-3';
+    deleteButton.textContent = 'Eliminar Todas';
+    deleteButton.onclick = deleteAllPredictions;
+    table.parentNode.appendChild(deleteButton);
+  }
+}
 
 // 6.5. Eliminar todas las predicciones con confirmación
 function deleteAllPredictions() {
@@ -391,3 +449,5 @@ document.addEventListener("DOMContentLoaded", () => {
   getWeeklyGames();
   loadPredictions();
 });
+
+

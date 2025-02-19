@@ -10,7 +10,7 @@
     font-size: 70%;
 }
 
-.loader {
+.timer {
     width: 45px;
     height: 45px;
     display: inline-block;
@@ -21,8 +21,8 @@
     border-radius: 50%;
     animation: neonFlicker 1.5s infinite alternate;
   }
-  .loader::after,
-  .loader::before {
+  .timer::after,
+  .timer::before {
     content: '';  
     position: absolute;
     height: 16px;
@@ -43,21 +43,30 @@
     border-radius: 5px;
     animation: rotation 10s linear infinite;
   }
-  .loader::before {
+  .timer::before {
     height: 22px;
     width: 2px;
     transform: translateX(-50%) rotate(0deg);
     animation-duration: 5s;
-  } 
+  }
+
+  .timer.stop-animation::before, .timer.stop-animation::after {
+    transform: rotate(180deg);
+    animation: none;
+  }
+
   @keyframes rotation {
     0%    { transform: rotate(0deg)}
     100%  { transform: rotate(360deg)}
   } 
 
+  .neon-bg{
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+
   .neon-text {
     font-family: "Saira Stencil One", serif;
     color: rgb(255, 255, 255);
-    background-color: rgba(0, 0, 0, 0.75);
         
     /* Efecto de resplandor en rojo con valores relativos */
     text-shadow: 
@@ -65,8 +74,8 @@
       0 0 0.08em #ff1a1a,
       0 0 0.12em #ff0000,
       0 0 0.16em #cc0000,
-      0 0 0.2em #990000,
-      0 0 0.30em #660000;
+      0 0 0.2em  #990000,
+      0 0 0.3em  #660000;
       
     /* Animación de parpadeo sutil */
     animation: neonFlicker 1.5s infinite alternate;
@@ -104,4 +113,201 @@
         0 0 0.36em #660000;
     }
   }
+
+  @keyframes neonFlickerRed {
+    0% {
+      opacity: 1;
+      box-shadow: 
+        0 0 0.04em #ff6666,
+        0 0 0.08em #ff3333,
+        0 0 0.12em #ff0000,
+        0 0 0.16em #cc0000,
+        0 0 0.2em #990000,
+        0 0 0.3em #660000;
+    }
+    50% {
+      opacity: 0.9;
+      box-shadow: 
+        0 0 0.032em #ff4d4d,
+        0 0 0.064em #ff1a1a,
+        0 0 0.094em #ff0000,
+        0 0 0.128em #cc0000,
+        0 0 0.16em #990000,
+        0 0 0.24em #660000;
+    }
+    100% {
+      opacity: 1;
+      box-shadow: 
+        0 0 0.048em #ff8080,
+        0 0 0.094em #ff4d4d,
+        0 0 0.144em #ff1a1a,
+        0 0 0.184em #cc0000,
+        0 0 0.24em #990000,
+        0 0 0.36em #660000;
+    }
+  }
+
+  @keyframes neonFlickerGreen {
+    0% {
+      opacity: 1;
+      box-shadow: 
+        0 0 0.04em #66ff66,
+        0 0 0.08em #33ff33,
+        0 0 0.12em #00ff00,
+        0 0 0.16em #00cc00,
+        0 0 0.2em  #009900,
+        0 0 0.3em  #006600;
+    }
+    50% {
+      opacity: 0.9;
+      box-shadow: 
+        0 0 0.032em #4dff4d,
+        0 0 0.064em #1aff1a,
+        0 0 0.094em #00ff00,
+        0 0 0.128em #00cc00,
+        0 0 0.16em  #009900,
+        0 0 0.24em  #006600;
+    }
+    100% {
+      opacity: 1;
+      box-shadow: 
+        0 0 0.048em #80ff80,
+        0 0 0.094em #4dff4d,
+        0 0 0.144em #1aff1a,
+        0 0 0.184em #00cc00,
+        0 0 0.24em  #009900,
+        0 0 0.36em  #006600;
+    }
+  }
+
+  @keyframes neonFlickerYellow {
+    0% {
+      opacity: 1;
+      box-shadow: 
+        0 0 0.04em #ffff66,
+        0 0 0.08em #ffff33,
+        0 0 0.12em #ffff00,
+        0 0 0.16em #cccc00,
+        0 0 0.2em #999900,
+        0 0 0.3em #666600;
+    }
+    50% {
+      opacity: 0.9;
+      box-shadow: 
+        0 0 0.032em #ffff4d,
+        0 0 0.064em #ffff1a,
+        0 0 0.094em #ffff00,
+        0 0 0.128em #cccc00,
+        0 0 0.16em #999900,
+        0 0 0.24em #666600;
+    }
+    100% {
+      opacity: 1;
+      box-shadow: 
+        0 0 0.048em #ffff80,
+        0 0 0.094em #ffff4d,
+        0 0 0.144em #ffff1a,
+        0 0 0.184em #cccc00,
+        0 0 0.24em #999900,
+        0 0 0.36em #666600;
+    }
+  }
+
+  @keyframes neonFlickerBlue {
+    0% {
+      opacity: 1;
+      box-shadow: 
+        0 0 0.04em #6666ff,
+        0 0 0.08em #3333ff,
+        0 0 0.12em #0000ff,
+        0 0 0.16em #0000cc,
+        0 0 0.2em #000099,
+        0 0 0.3em #000066;
+    }
+    50% {
+      opacity: 0.9;
+      box-shadow: 
+        0 0 0.032em #4d4dff,
+        0 0 0.064em #1a1aff,
+        0 0 0.094em #0000ff,
+        0 0 0.128em #0000cc,
+        0 0 0.16em #000099,
+        0 0 0.24em #000066;
+    }
+    100% {
+      opacity: 1;
+      box-shadow: 
+        0 0 0.048em #8080ff,
+        0 0 0.094em #4d4dff,
+        0 0 0.144em #1a1aff,
+        0 0 0.184em #0000cc,
+        0 0 0.24em #000099,
+        0 0 0.36em #000066;
+    }
+  }
+
+  @keyframes neonFlickerPurple {
+    0% {
+      opacity: 1;
+      box-shadow: 
+        inset 0 0 0.04em #d966ff,
+        0 0 0.04em #d966ff,
+        0 0 0.08em #bf40ff,
+        0 0 0.12em #8000ff,
+        0 0 0.16em #6600cc,
+        0 0 0.2em #4d0099,
+        0 0 0.3em #330066;
+    }
+    50% {
+      opacity: 0.9;
+      box-shadow: 
+        inset 0 0 0.032em #bf40ff,
+        0 0 0.032em #bf40ff,
+        0 0 0.064em #a620ff,
+        0 0 0.094em #8000ff,
+        0 0 0.128em #6600cc,
+        0 0 0.16em #4d0099,
+        0 0 0.24em #330066;
+    }
+    100% {
+      opacity: 1;
+      box-shadow: 
+        inset 0 0 0.048em #e680ff,
+        0 0 0.048em #e680ff,
+        0 0 0.094em #bf40ff,
+        0 0 0.144em #a620ff,
+        0 0 0.184em #6600cc,
+        0 0 0.24em #4d0099,
+        0 0 0.36em #330066;
+    }
+  }
+
+  
+  .scheduled, .on-progress, .finished, .paused{
+    display: block;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    background: #fff;
+    left: 12%;
+    top: 25px;
+    border-radius: 50%;
+    animation: neonFlickerPurple 1.5s infinite alternate;
+  }
+
+  .on-progress{
+    left: 85px;
+    animation: neonFlickerGreen 1.5s infinite alternate;
+  }
+  
+  .finished{
+    left: 105px;
+    animation: neonFlickerRed 1.5s infinite alternate;
+  }
+
+  .paused{
+    left: 125px;
+    animation: neonFlickerYellow 1.5s infinite alternate;
+  }
+
   
