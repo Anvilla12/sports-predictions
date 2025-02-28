@@ -13,17 +13,29 @@
 - **SweetAlerts 2** para alertas interactivas y elegantes.  
 
 ## 📁 Estructura del proyecto  
+
 ├── .gitignore 
+
 ├── css/ 
+
 │ 
+
 └── style.css 
+
 ├── img/ 
+
 │ 
+
 ├── NBA Logo.svg 
+
 │ 
+
 └── vs.png 
+
 ├── index.html 
+
 └── js/ 
+
 └── nba-teams.js
 
 
